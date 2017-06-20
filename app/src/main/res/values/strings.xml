@@ -3,4 +3,5 @@
     <string name="find_book">Find Book</string>
     <string name="no_books">No Books Found</string>
     <string name="no_internet">No internet connection</string>
+    <string name="search">Search</string>
 </resources>
