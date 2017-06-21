@@ -103,16 +103,21 @@ public class QueryUtils {
             for (int i = 0; i < booksArray.length(); i++) {
 
                 JSONObject currentBookJson = booksArray.getJSONObject(i).getJSONObject("volumeInfo");
-                JSONArray authorsJson = currentBookJson.getJSONArray("authors");
 
                 String title = currentBookJson.getString("title");
                 String authors = "";
-                for (int x = 0; x < authorsJson.length(); x++) {
-                    if (x >= 1) {
-                        authors += ", ";
+                if (currentBookJson.has("authors")) {
+                    JSONArray authorsJson = currentBookJson.getJSONArray("authors");
+                    for (int x = 0; x < authorsJson.length(); x++) {
+                        if (x >= 1) {
+                            authors += ", ";
+                        }
+                        authors += authorsJson.getString(x);
                     }
-                    authors += authorsJson.getString(x);
+                } else {
+                    authors = "Author N/A";
                 }
+
                 Book newBook = new Book(title, authors);
                 books.add(newBook);
             }

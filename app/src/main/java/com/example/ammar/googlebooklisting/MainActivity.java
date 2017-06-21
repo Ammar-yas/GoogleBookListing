@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     ProgressBar progressBar;
     TextView statusTextView;
     BooksAdapter booksAdapter;
-    String BooksRequestUrl = "https://www.googleapis.com/books/v1/volumes?q=";
+    String BooksRequestUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View v) {
                 if (isConnected()) {
+                    String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=";
                     progressBar.setVisibility(View.VISIBLE);
-                    BooksRequestUrl = BooksRequestUrl + searchQuery.getText();
-                    loaderManager.initLoader(1, null, MainActivity.this);
+                    BooksRequestUrl = apiUrl + searchQuery.getText();
+                    if (loaderManager.getLoader(1) != null) {
+                        loaderManager.restartLoader(1, null, MainActivity.this);
+                    }else{
+                        loaderManager.initLoader(1, null, MainActivity.this);
+                    }
                 } else {
                     statusTextView.setText(getText(R.string.no_internet));
                     listView.setEmptyView(statusTextView);

@@ -22,14 +22,27 @@ public class BooksAdapter extends ArrayAdapter<Book> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View bookView = convertView;
+        ViewHolder holder = null;
         if (bookView == null) {
-            bookView = LayoutInflater.from(getContext()).inflate(R.layout.book_item, parent, false);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            bookView = inflater.inflate(R.layout.book_item,parent,false);
+            holder = new ViewHolder();
+            holder.title = (TextView) bookView.findViewById(R.id.title);
+            holder.author = (TextView) bookView.findViewById(R.id.author);
+            bookView.setTag(holder);
+        }else {
+            holder = (ViewHolder) bookView.getTag();
         }
-        TextView title = (TextView) bookView.findViewById(R.id.title);
-        TextView author = (TextView) bookView.findViewById(R.id.author);
+
         Book book = getItem(position);
-        title.setText(book.getTitle());
-        author.setText(book.getAuthor());
+        holder.title.setText(book.getTitle());
+        holder.author.setText(book.getAuthor());
         return bookView;
     }
+
+    static class ViewHolder{
+        TextView title;
+        TextView author;
+    }
 }
+
