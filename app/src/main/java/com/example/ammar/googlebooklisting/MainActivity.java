@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         loaderManager.initLoader(1, null, MainActivity.this);
                     }
                 } else {
+                    booksAdapter.clear();
                     statusTextView.setText(getText(R.string.no_internet));
                     listView.setEmptyView(statusTextView);
                 }
